@@ -4025,6 +4025,9 @@ local void process(char *path) {
     if (g.decode) {
         in_init();
         method = get_header(1);
+        if (method == -1) {
+            throw(1, "EOF on input", g.inf);
+        }
         if (method != 8 && method != 257 &&
                 // gzip -cdf acts like cat on uncompressed input
                 !((method == -1 || method == -2) && g.force && g.pipeout &&
