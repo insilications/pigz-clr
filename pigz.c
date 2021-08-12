@@ -4324,10 +4324,10 @@ local void defaults(void) {
     g.procs = nprocs(8);
     g.shift = x2nmodp(g.block, 3);
 #endif
-    g.rsync = 0;                    // don't do rsync blocking
+    g.rsync = 1;                    // don't do rsync blocking
     g.setdict = 1;                  // initialize dictionary each thread
     g.verbosity = 1;                // normal message level
-    g.headis = 3;                   // store name and time (low bits == 11),
+    g.headis = 1;                   // store name and time (low bits == 11),
                                     // restore neither (next bits == 00),
                                     // where 01 is name and 10 is time
     g.pipeout = 0;                  // don't force output to stdout
