@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual
+CFLAGS+=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual
 LDFLAGS=
 # CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -g -fsanitize=thread
 # LDFLAGS=-g -fsanitize=thread
@@ -12,7 +12,7 @@ ZOP=deflate.o blocksplitter.o tree.o lz77.o cache.o hash.o util.o squeeze.o kata
 # use gcc and gmake on Solaris
 
 pigz: pigz.o yarn.o try.o $(ZOP)
-	$(CC) $(LDFLAGS) -o pigz pigz.o yarn.o try.o $(ZOP) $(LIBS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o pigz pigz.o yarn.o try.o $(ZOP) $(LIBS)
 	ln -f pigz unpigz
 
 pigz.o: pigz.c yarn.h try.h $(ZOPFLI)deflate.h $(ZOPFLI)util.h
