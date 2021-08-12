@@ -107,5 +107,12 @@ pigz.pdf: pigz.1
 
 all: pigz pigzj pigzt pigzn docs
 
+install: pigz
+	mkdir -p $(DESTDIR)/usr/bin
+	cp pigz $(DESTDIR)/usr/bin/pigz
+	ln -s pigz $(DESTDIR)/usr/bin/gzip
+	mkdir -p $(DESTDIR)/usr/share/man/man1/
+	cp pigz.1 $(DESTDIR)/usr/share/man/man1/pigz.1
+
 clean:
 	@rm -f *.o pigz unpigz pigzj pigzn pigzt pigz.c.gz pigz.c.zz pigz.c.zip
