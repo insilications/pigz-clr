@@ -5,7 +5,7 @@ LDFLAGS=
 # LDFLAGS=-g -fsanitize=thread
 # CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -g -fsanitize=address
 # LDFLAGS=-g -fsanitize=address
-LIBS=-lm -lpthread -lz
+LIBS=-lm -lpthread /usr/lib64/libz.a
 ZOPFLI=zopfli/src/zopfli/
 ZOP=deflate.o blocksplitter.o tree.o lz77.o cache.o hash.o util.o squeeze.o katajainen.o symbols.o
 
