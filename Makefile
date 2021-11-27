@@ -1,11 +1,11 @@
 CC=gcc
-CFLAGS+=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual
-LDFLAGS=
+CFLAGS+=-Ofast -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual
+LDFLAGS+=-fPIC
 # CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -g -fsanitize=thread
 # LDFLAGS=-g -fsanitize=thread
 # CFLAGS=-O3 -Wall -Wextra -Wno-unknown-pragmas -Wcast-qual -g -fsanitize=address
 # LDFLAGS=-g -fsanitize=address
-LIBS=-lm -lpthread /usr/lib64/libz.a
+LIBS+=-lm -lpthread /usr/lib64/libz.a
 ZOPFLI=zopfli/src/zopfli/
 ZOP=deflate.o blocksplitter.o tree.o lz77.o cache.o hash.o util.o squeeze.o katajainen.o symbols.o
 
@@ -54,28 +54,28 @@ symbols.o: $(ZOPFLI)symbols.c $(ZOPFLI)symbols.h
 dev: pigz pigzj pigzt pigzn
 
 pigzj: pigzj.o yarn.o try.o
-	$(CC) $(LDFLAGS) -o pigzj pigzj.o yarn.o try.o $(LIBS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o pigzj pigzj.o yarn.o try.o $(LIBS)
 
 pigzj.o: pigz.c yarn.h try.h
-	$(CC) $(CFLAGS) -DNOZOPFLI -c -o pigzj.o pigz.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DNOZOPFLI -c -o pigzj.o pigz.c
 
 pigzt: pigzt.o yarnt.o try.o $(ZOP)
-	$(CC) $(LDFLAGS) -o pigzt pigzt.o yarnt.o try.o $(ZOP) $(LIBS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o pigzt pigzt.o yarnt.o try.o $(ZOP) $(LIBS)
 
 pigzt.o: pigz.c yarn.h try.h
-	$(CC) $(CFLAGS) -DPIGZ_DEBUG -g -c -o pigzt.o pigz.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DPIGZ_DEBUG -g -c -o pigzt.o pigz.c
 
 yarnt.o: yarn.c yarn.h
-	$(CC) $(CFLAGS) -DPIGZ_DEBUG -g -c -o yarnt.o yarn.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DPIGZ_DEBUG -g -c -o yarnt.o yarn.c
 
 pigzn: pigzn.o tryn.o $(ZOP)
-	$(CC) $(LDFLAGS) -o pigzn pigzn.o tryn.o $(ZOP) $(LIBS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o pigzn pigzn.o tryn.o $(ZOP) $(LIBS)
 
 pigzn.o: pigz.c try.h
-	$(CC) $(CFLAGS) -DPIGZ_DEBUG -DNOTHREAD -g -c -o pigzn.o pigz.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DPIGZ_DEBUG -DNOTHREAD -g -c -o pigzn.o pigz.c
 
 tryn.o: try.c try.h
-	$(CC) $(CFLAGS) -DPIGZ_DEBUG -DNOTHREAD -g -c -o tryn.o try.c
+	$(CC) $(LDFLAGS) $(CFLAGS) -DPIGZ_DEBUG -DNOTHREAD -g -c -o tryn.o try.c
 
 test: pigz
 	./pigz -kf pigz.c ; ./pigz -t pigz.c.gz
